@@ -3,11 +3,12 @@ package com.vanks.sound_cloud_client.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.vanks.sound_cloud_client.collection.AlbumCollection
+import com.vanks.sound_cloud_client.collection.PlaylistCollection
+import com.vanks.sound_cloud_client.collection.TrackCollection
 
 class HomeViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
+    var trackCollection: LiveData<TrackCollection> = MutableLiveData<TrackCollection>()
+    var albumCollection: LiveData<AlbumCollection> = MutableLiveData<AlbumCollection>()
+    var playlistCollection: LiveData<PlaylistCollection> = MutableLiveData<PlaylistCollection>()
 }
