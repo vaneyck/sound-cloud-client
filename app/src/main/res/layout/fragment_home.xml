@@ -49,8 +49,10 @@
                 android:id="@+id/playlist_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2sp"
-                android:text="PlayLists"
+                android:padding="5sp"
+                android:paddingLeft="2sp"
+                android:text="Playlists"
+                android:textStyle="bold"
                 android:textColor="@color/colorPrimary" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -63,8 +65,10 @@
                 android:id="@+id/album_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2sp"
+                android:padding="5sp"
+                android:paddingLeft="2sp"
                 android:text="Albums"
+                android:textStyle="bold"
                 android:textColor="@color/colorPrimary" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -77,8 +81,10 @@
                 android:id="@+id/track_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2sp"
+                android:padding="5sp"
+                android:paddingLeft="2sp"
                 android:text="Tracks"
+                android:textStyle="bold"
                 android:textColor="@color/colorPrimary" />
 
             <androidx.recyclerview.widget.RecyclerView
