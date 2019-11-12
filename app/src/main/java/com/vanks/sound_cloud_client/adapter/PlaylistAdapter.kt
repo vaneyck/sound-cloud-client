@@ -2,13 +2,16 @@ package com.vanks.sound_cloud_client.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.databinding.SinglePlaylistBinding
 import com.vanks.sound_cloud_client.domainmodel.Playlist
 
-class PlaylistAdapter() : RecyclerView.Adapter<PlaylistViewHolder>() {
+class PlaylistAdapter(val navController: NavController) : RecyclerView.Adapter<PlaylistViewHolder>() {
 
     var playlists: ArrayList<Playlist> = ArrayList()
 
@@ -33,6 +36,12 @@ class PlaylistAdapter() : RecyclerView.Adapter<PlaylistViewHolder>() {
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
         holder.binding.playlist = playlists[position]
+        holder.binding.playlistImage.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                navController.navigate(R.id.navigation_collection_view)
+            }
+
+        })
     }
 
 }

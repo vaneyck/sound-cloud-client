@@ -9,7 +9,13 @@
         android:id="@+id/navigation_home"
         android:name="com.vanks.sound_cloud_client.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_collection_view"
+            app:destination="@id/navigation_collection_view"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/navigation_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -22,4 +28,9 @@
         android:name="com.vanks.sound_cloud_client.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_collection_view"
+        android:name="com.vanks.sound_cloud_client.ui.notifications.CollectionFragment"
+        android:label="@string/title_collection"
+        tools:layout="@layout/fragment_collection_view"/>
 </navigation>

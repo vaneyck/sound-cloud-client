@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vanks.sound_cloud_client.R
@@ -59,8 +61,10 @@ class HomeFragment : Fragment() {
         val playlistRecyclerView = root.findViewById<RecyclerView>(R.id.playlist_recyclerview)
         val trackRecylerView = root.findViewById<RecyclerView>(R.id.track_recyclerview)
 
-        albumRecylerView.adapter = AlbumAdapter()
-        playlistRecyclerView.adapter = PlaylistAdapter()
+        val navController = this.findNavController()
+
+        albumRecylerView.adapter = AlbumAdapter(navController)
+        playlistRecyclerView.adapter = PlaylistAdapter(navController)
         trackRecylerView.adapter = TrackAdapter()
 
         // Set album and playlist to be horizontally aligned
