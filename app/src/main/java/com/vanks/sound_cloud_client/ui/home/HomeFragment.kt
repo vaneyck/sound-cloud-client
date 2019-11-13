@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.adapter.AlbumAdapter
 import com.vanks.sound_cloud_client.adapter.PlaylistAdapter
@@ -36,7 +37,8 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        val binding: FragmentHomeBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         val root = binding.root
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
@@ -68,9 +70,24 @@ class HomeFragment : Fragment() {
         trackRecylerView.adapter = TrackAdapter()
 
         // Set album and playlist to be horizontally aligned
-        albumRecylerView.layoutManager = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
-        playlistRecyclerView.layoutManager = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
-        trackRecylerView.layoutManager = LinearLayoutManager(this.activity, LinearLayoutManager.VERTICAL, false)
+        albumRecylerView.layoutManager =
+            LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+        playlistRecyclerView.layoutManager =
+            LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+        trackRecylerView.layoutManager =
+            LinearLayoutManager(this.activity, LinearLayoutManager.VERTICAL, false)
+
+        root.findViewById<MaterialButton>(R.id.search_button)
+            .setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    val searchTerm = search_field.text.toString().trim()
+//                homeViewModel.albumCollection = musicRepository.getAlbumCollection()
+//                homeViewModel.trackCollection = musicRepository.getTrackCollection()
+//                homeViewModel.playlistCollection = musicRepository.getPlaylistCollection()
+                    musicRepository.searchTracks(searchTerm)
+                    musicRepository.searchPlaylists(searchTerm)
+                }
+            })
 
         return root
     }

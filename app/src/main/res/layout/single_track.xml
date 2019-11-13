@@ -6,7 +6,7 @@
 
         <variable
             name="track"
-            type="com.vanks.sound_cloud_client.domainmodel.Track" />
+            type="com.vanks.sound_cloud_client.viewmodel.Track" />
     </data>
 
     <LinearLayout
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="5sp">
+            android:padding="10sp">
 
             <ImageView
                 android:layout_width="70sp"
@@ -28,21 +28,23 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="2dp"
-                    android:text="@{track.title}" />
+                    android:layout_marginBottom="3dp"
+                    android:text="@{track.title}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@{track.artistName}" />
+                    android:text="@{track.artistName}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

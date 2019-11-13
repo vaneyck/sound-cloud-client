@@ -6,7 +6,7 @@
 
         <variable
             name="playlist"
-            type="com.vanks.sound_cloud_client.domainmodel.Playlist" />
+            type="com.vanks.sound_cloud_client.viewmodel.Playlist" />
     </data>
 
     <LinearLayout

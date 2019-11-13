@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.databinding.SinglePlaylistBinding
-import com.vanks.sound_cloud_client.domainmodel.Playlist
+import com.vanks.sound_cloud_client.viewmodel.Playlist
 
 class PlaylistAdapter(val navController: NavController) : RecyclerView.Adapter<PlaylistViewHolder>() {
 

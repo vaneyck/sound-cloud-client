@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.databinding.SingleAlbumBinding
-import com.vanks.sound_cloud_client.domainmodel.Album
+import com.vanks.sound_cloud_client.viewmodel.Album
 
 class AlbumAdapter(val navController: NavController) : RecyclerView.Adapter<AlbumViewHolder>() {
 

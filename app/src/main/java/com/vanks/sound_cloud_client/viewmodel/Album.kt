@@ -1,11 +1,12 @@
-package com.vanks.sound_cloud_client.domainmodel
+package com.vanks.sound_cloud_client.viewmodel
 
 import com.vanks.sound_cloud_client.collection.TrackCollection
+import com.vanks.sound_cloud_client.util.getRandomInt
 
 class Album : TrackHolder {
-    val id: Long = (Math.random() * 1000).toLong()
-    val title: String = "Album Title"
-    override val imageUrl: String = "https://picsum.photos/200/200?id=" + Math.random()
+    val id: Int = 0
+    override var title: String = "Album Title"
+    override var imageUrl: String = "https://picsum.photos/900/900?id=" + getRandomInt()
     override fun toString(): String {
         return "Album(title='$title', imageUrl='$imageUrl')"
     }

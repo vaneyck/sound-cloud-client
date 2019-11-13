@@ -6,7 +6,7 @@
 
         <variable
             name="trackHolder"
-            type="com.vanks.sound_cloud_client.domainmodel.TrackHolder" />
+            type="com.vanks.sound_cloud_client.viewmodel.TrackHolder" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -15,11 +15,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/collection_artwork"
+                android:paddingTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:imageUrl="@{trackHolder.imageUrl}" />
@@ -29,7 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Album Title"
+                android:layout_marginTop="5sp"
+                android:text="@{trackHolder.title}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <TextView
@@ -37,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5sp"
                 android:text="By Person X"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 

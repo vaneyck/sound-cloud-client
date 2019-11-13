@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.databinding.SingleTrackBinding
-import com.vanks.sound_cloud_client.domainmodel.Track
+import com.vanks.sound_cloud_client.viewmodel.Track
 
 class TrackAdapter() : RecyclerView.Adapter<TrackViewHolder>() {
 

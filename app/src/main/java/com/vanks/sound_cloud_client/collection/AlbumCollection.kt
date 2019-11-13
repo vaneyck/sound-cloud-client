@@ -1,6 +1,6 @@
 package com.vanks.sound_cloud_client.collection
 
-import com.vanks.sound_cloud_client.domainmodel.Album
+import com.vanks.sound_cloud_client.viewmodel.Album
 import java.util.*
 import kotlin.collections.ArrayList
 

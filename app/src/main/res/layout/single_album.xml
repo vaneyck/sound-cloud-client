@@ -6,7 +6,7 @@
 
         <variable
             name="album"
-            type="com.vanks.sound_cloud_client.domainmodel.Album" />
+            type="com.vanks.sound_cloud_client.viewmodel.Album" />
     </data>
     <LinearLayout
         android:orientation="vertical"
