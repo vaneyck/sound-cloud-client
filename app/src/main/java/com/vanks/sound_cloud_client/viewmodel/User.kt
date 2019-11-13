@@ -14,6 +14,10 @@ class User : TrackHolder {
         this.imageUrl = _imageUrl
     }
 
+    override fun getCreator(): String {
+        return title
+    }
+
     override fun toString(): String {
         return "User(title='$title', imageUrl='$imageUrl')"
     }

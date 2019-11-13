@@ -16,6 +16,9 @@ class Playlist : TrackHolder {
         this.artistName = _artistName
     }
 
+    override fun getCreator () : String {
+        return artistName
+    }
 
     override fun toString(): String {
         return "Playlist(title='$title', imageUrl='$imageUrl')"

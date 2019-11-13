@@ -4,8 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.vanks.sound_cloud_client.R
+import com.vanks.sound_cloud_client.databinding.FragmentHomeBinding
+import com.vanks.sound_cloud_client.databinding.FragmentMiniPlayerBinding
+import com.vanks.sound_cloud_client.repository.MusicRepository
+import com.vanks.sound_cloud_client.ui.collection.CollectionViewModel
 
 class MiniPlayerFragment : Fragment() {
 
@@ -14,7 +21,17 @@ class MiniPlayerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_mini_player, container, false)
+        val binding: FragmentMiniPlayerBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_mini_player, container, false)
+        val root = binding.root
+
+        var playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
+        var musicRepository = MusicRepository()
+
+        playerViewModel.track = musicRepository.retrieveCurrentTrack()
+        playerViewModel.track.observe(this, Observer {
+            binding.track = it
+        })
         return root
     }
 }

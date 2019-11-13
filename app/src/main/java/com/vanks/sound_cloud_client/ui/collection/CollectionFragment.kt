@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.adapter.TrackAdapter
 import com.vanks.sound_cloud_client.databinding.FragmentCollectionViewBinding
+import com.vanks.sound_cloud_client.repository.MusicRepository
 import com.vanks.sound_cloud_client.ui.collection.CollectionViewModel
-import com.vanks.sound_cloud_client.util.Resources
 
 class CollectionFragment : Fragment() {
 
@@ -28,7 +28,7 @@ class CollectionFragment : Fragment() {
         val binding: FragmentCollectionViewBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_collection_view, container, false)
         val root = binding.root
         collectionViewModel = ViewModelProviders.of(this).get(CollectionViewModel::class.java)
-        var musicRepository = Resources.musicRep
+        var musicRepository = MusicRepository()
 
         collectionViewModel.trackHolder = musicRepository.getTrackHolder(1, "Playlist")
 
@@ -37,7 +37,7 @@ class CollectionFragment : Fragment() {
         })
 
         val collectionRecyclerView = root.findViewById<RecyclerView>(R.id.collectionRecyclerView)
-        collectionRecyclerView.adapter = TrackAdapter()
+        collectionRecyclerView.adapter = TrackAdapter(musicRepository)
         collectionRecyclerView.layoutManager = LinearLayoutManager(this.activity, LinearLayoutManager.VERTICAL, false)
 
         return root

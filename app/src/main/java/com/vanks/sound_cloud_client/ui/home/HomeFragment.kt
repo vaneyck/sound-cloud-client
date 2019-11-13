@@ -17,7 +17,7 @@ import com.vanks.sound_cloud_client.adapter.AlbumAdapter
 import com.vanks.sound_cloud_client.adapter.PlaylistAdapter
 import com.vanks.sound_cloud_client.adapter.TrackAdapter
 import com.vanks.sound_cloud_client.databinding.FragmentHomeBinding
-import com.vanks.sound_cloud_client.util.Resources
+import com.vanks.sound_cloud_client.repository.MusicRepository
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
         val root = binding.root
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        var musicRepository = Resources.musicRep
+        var musicRepository = MusicRepository()
 
         homeViewModel.userCollection = musicRepository.getAlbumCollection()
         homeViewModel.trackCollection = musicRepository.getTrackCollection()
@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
 
         albumRecylerView.adapter = AlbumAdapter(navController)
         playlistRecyclerView.adapter = PlaylistAdapter(navController)
-        trackRecylerView.adapter = TrackAdapter()
+        trackRecylerView.adapter = TrackAdapter(musicRepository)
 
         // Set album and playlist to be horizontally aligned
         albumRecylerView.layoutManager =
@@ -73,9 +73,6 @@ class HomeFragment : Fragment() {
             .setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
                     val searchTerm = search_field.text.toString().trim()
-//                homeViewModel.userCollection = musicRepository.getUserCollection()
-//                homeViewModel.trackCollection = musicRepository.getTrackCollection()
-//                homeViewModel.playlistCollection = musicRepository.getPlaylistCollection()
                     musicRepository.searchTracks(searchTerm)
                     musicRepository.searchPlaylists(searchTerm)
                     musicRepository.searchUsers(searchTerm)

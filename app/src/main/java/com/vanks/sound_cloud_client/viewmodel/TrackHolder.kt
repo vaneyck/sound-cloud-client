@@ -6,4 +6,5 @@ interface TrackHolder {
     var imageUrl: String
     var title: String
     fun getTrackCollection(): TrackCollection
+    fun getCreator () : String
 }

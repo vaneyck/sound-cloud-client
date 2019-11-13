@@ -2,13 +2,15 @@ package com.vanks.sound_cloud_client.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.databinding.SingleTrackBinding
+import com.vanks.sound_cloud_client.repository.MusicRepository
 import com.vanks.sound_cloud_client.viewmodel.Track
 
-class TrackAdapter() : RecyclerView.Adapter<TrackViewHolder>() {
+class TrackAdapter(val musicRepository: MusicRepository) : RecyclerView.Adapter<TrackViewHolder>() {
 
     var tracks: ArrayList<Track> = ArrayList()
 
@@ -33,6 +35,12 @@ class TrackAdapter() : RecyclerView.Adapter<TrackViewHolder>() {
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         holder.binding.track = tracks[position]
+        holder.binding.trackContainer.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                musicRepository.setCurrentTrack(tracks[position])
+            }
+
+        })
     }
 
 }

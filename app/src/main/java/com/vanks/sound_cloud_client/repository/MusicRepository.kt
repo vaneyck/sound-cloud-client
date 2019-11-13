@@ -23,6 +23,7 @@ class MusicRepository {
     private val tracks = MutableLiveData<TrackCollection>()
     private val playlists = MutableLiveData<PlaylistCollection>()
     private val trackHolder = MutableLiveData<TrackHolder>()
+    private val currentTrack = MutableLiveData<Track>()
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
@@ -35,15 +36,15 @@ class MusicRepository {
         return getRetrofit().create(SoundCloudWebservice::class.java)
     }
 
-    fun searchTracks (searchTerm: String) {
+    fun searchTracks(searchTerm: String) {
         getSoundCloudWebservice().searchTracks(searchTerm).enqueue(saveTracksCallback())
     }
 
-    fun searchPlaylists (searchTerm: String) {
+    fun searchPlaylists(searchTerm: String) {
         getSoundCloudWebservice().searchCollection(searchTerm).enqueue(savePlaylistsCallback())
     }
 
-    fun searchUsers (searchTerm: String) {
+    fun searchUsers(searchTerm: String) {
         getSoundCloudWebservice().searchUsers(searchTerm).enqueue(saveUsersCallback())
     }
 
@@ -71,18 +72,37 @@ class MusicRepository {
         return trackHolder
     }
 
+    fun setCurrentTrack(t: Track) {
+        currentTrack.value = t
+    }
+
+    fun retrieveCurrentTrack() : LiveData<Track> {
+        return currentTrack
+    }
+
     private fun saveTracksCallback(): Callback<Array<SoundCloudTrack>> {
         return object : Callback<Array<SoundCloudTrack>> {
-            override fun onResponse(call: Call<Array<SoundCloudTrack>>, response: Response<Array<SoundCloudTrack>>) {
+            override fun onResponse(
+                call: Call<Array<SoundCloudTrack>>,
+                response: Response<Array<SoundCloudTrack>>
+            ) {
                 if (response.body() != null) {
                     var soundCloudTracks = response.body() as Array<SoundCloudTrack>
                     var trackCollection = TrackCollection()
-                    for(track in soundCloudTracks) {
-                        trackCollection.tracks.add(Track(track.id, track.title, track.artwork_url?:IMAGE_URL, track.user.username))
+                    for (track in soundCloudTracks) {
+                        trackCollection.tracks.add(
+                            Track(
+                                track.id,
+                                track.title,
+                                track.artwork_url ?: IMAGE_URL,
+                                track.user.username
+                            )
+                        )
                     }
                     tracks.value = trackCollection
                 }
             }
+
             // Error case is left out for brevity.
             override fun onFailure(call: Call<Array<SoundCloudTrack>>, t: Throwable) {
                 Log.e(TAG, t.toString())
@@ -92,16 +112,27 @@ class MusicRepository {
 
     private fun savePlaylistsCallback(): Callback<Array<SoundCloudPlaylist>> {
         return object : Callback<Array<SoundCloudPlaylist>> {
-            override fun onResponse(call: Call<Array<SoundCloudPlaylist>>, response: Response<Array<SoundCloudPlaylist>>) {
+            override fun onResponse(
+                call: Call<Array<SoundCloudPlaylist>>,
+                response: Response<Array<SoundCloudPlaylist>>
+            ) {
                 if (response.body() != null) {
                     var soundCloudPlaylists = response.body() as Array<SoundCloudPlaylist>
                     var playlistCollection = PlaylistCollection()
-                    for(playlist in soundCloudPlaylists) {
-                        playlistCollection.playlists.add(Playlist(playlist.id, playlist.title, playlist.artwork_url?:IMAGE_URL, playlist.user.username))
+                    for (playlist in soundCloudPlaylists) {
+                        playlistCollection.playlists.add(
+                            Playlist(
+                                playlist.id,
+                                playlist.title,
+                                playlist.artwork_url ?: IMAGE_URL,
+                                playlist.user.username
+                            )
+                        )
                     }
                     playlists.value = playlistCollection
                 }
             }
+
             // Error case is left out for brevity.
             override fun onFailure(call: Call<Array<SoundCloudPlaylist>>, t: Throwable) {
                 Log.e(TAG, t.toString())
@@ -112,16 +143,26 @@ class MusicRepository {
 
     private fun saveUsersCallback(): Callback<Array<SoundCloudUser>> {
         return object : Callback<Array<SoundCloudUser>> {
-            override fun onResponse(call: Call<Array<SoundCloudUser>>, response: Response<Array<SoundCloudUser>>) {
+            override fun onResponse(
+                call: Call<Array<SoundCloudUser>>,
+                response: Response<Array<SoundCloudUser>>
+            ) {
                 if (response.body() != null) {
                     var SoundCloudUsers = response.body() as Array<SoundCloudUser>
                     var userCollection = UserCollection()
-                    for(user in SoundCloudUsers) {
-                        userCollection.users.add(User(user.id, user.username, user.avatar_url?:IMAGE_URL))
+                    for (user in SoundCloudUsers) {
+                        userCollection.users.add(
+                            User(
+                                user.id,
+                                user.username,
+                                user.avatar_url ?: IMAGE_URL
+                            )
+                        )
                     }
                     users.value = userCollection
                 }
             }
+
             // Error case is left out for brevity.
             override fun onFailure(call: Call<Array<SoundCloudUser>>, t: Throwable) {
                 Log.e(TAG, t.toString())
@@ -129,5 +170,6 @@ class MusicRepository {
         }
     }
 
-    val IMAGE_URL: String = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8JwLNj7h-x8b06skjkIZacF2Yw1trn3fGtNkiNJJIo2AnR_u3&s"
+    val IMAGE_URL: String =
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8JwLNj7h-x8b06skjkIZacF2Yw1trn3fGtNkiNJJIo2AnR_u3&s"
 }
