@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="album"
-            type="com.vanks.sound_cloud_client.viewmodel.Album" />
+            name="user"
+            type="com.vanks.sound_cloud_client.viewmodel.User" />
     </data>
     <LinearLayout
         android:orientation="vertical"
@@ -14,9 +14,9 @@
         android:layout_width="100sp"
         android:layout_height="100sp">
         <ImageView
-            android:id="@+id/albumImage"
+            android:id="@+id/userImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:imageUrl="@{album.imageUrl}"/>
+            app:imageUrl="@{user.imageUrl}"/>
     </LinearLayout>
 </layout>

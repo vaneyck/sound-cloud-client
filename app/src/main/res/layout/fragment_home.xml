@@ -9,8 +9,8 @@
             type="com.vanks.sound_cloud_client.collection.TrackCollection" />
 
         <variable
-            name="albumCollection"
-            type="com.vanks.sound_cloud_client.collection.AlbumCollection" />
+            name="userCollection"
+            type="com.vanks.sound_cloud_client.collection.UserCollection" />
 
         <variable
             name="playlistCollection"
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5sp"
                 android:paddingLeft="2sp"
-                android:text="Albums"
+                android:text="Users"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
@@ -94,7 +94,7 @@
                 android:id="@+id/album_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:albumData="@{albumCollection}" />
+                app:albumData="@{userCollection}" />
 
             <TextView
                 android:id="@+id/track_title"

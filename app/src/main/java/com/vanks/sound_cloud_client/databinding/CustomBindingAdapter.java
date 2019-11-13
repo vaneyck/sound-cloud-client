@@ -11,7 +11,7 @@ import com.vanks.sound_cloud_client.R;
 import com.vanks.sound_cloud_client.adapter.AlbumAdapter;
 import com.vanks.sound_cloud_client.adapter.PlaylistAdapter;
 import com.vanks.sound_cloud_client.adapter.TrackAdapter;
-import com.vanks.sound_cloud_client.collection.AlbumCollection;
+import com.vanks.sound_cloud_client.collection.UserCollection;
 import com.vanks.sound_cloud_client.collection.PlaylistCollection;
 import com.vanks.sound_cloud_client.collection.TrackCollection;
 
@@ -37,11 +37,11 @@ public class CustomBindingAdapter {
     }
 
     @BindingAdapter("albumData")
-    public static void setArticlesInRecyclerView(RecyclerView recyclerView, AlbumCollection collection) {
-        Log.i(TAG, collection.toString());
+    public static void setArticlesInRecyclerView(RecyclerView recyclerView, UserCollection collection) {
+            Log.i(TAG, collection.toString());
         AlbumAdapter adapter = (AlbumAdapter) recyclerView.getAdapter();
         Log.i(TAG, "Adapter is " + adapter.toString());
-        adapter.setData(collection.getAlbums());
+        adapter.setData(collection.getUsers());
     }
 
     @BindingAdapter("playlistData")

@@ -8,14 +8,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.databinding.SingleAlbumBinding
-import com.vanks.sound_cloud_client.viewmodel.Album
+import com.vanks.sound_cloud_client.viewmodel.User
 
 class AlbumAdapter(val navController: NavController) : RecyclerView.Adapter<AlbumViewHolder>() {
 
-    var albums: ArrayList<Album> = ArrayList()
+    var users: ArrayList<User> = ArrayList()
 
-    fun setData(items: ArrayList<Album>) {
-        albums = items
+    fun setData(items: ArrayList<User>) {
+        users = items
         notifyDataSetChanged()
     }
 
@@ -31,11 +31,11 @@ class AlbumAdapter(val navController: NavController) : RecyclerView.Adapter<Albu
         return AlbumViewHolder(binding)
     }
 
-    override fun getItemCount() = albums.size
+    override fun getItemCount() = users.size
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
-        holder.binding.album = albums[position]
-        holder.binding.albumImage.setOnClickListener(object: View.OnClickListener {
+        holder.binding.user = users[position]
+        holder.binding.userImage.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
                 navController.navigate(R.id.navigation_collection_view)
             }

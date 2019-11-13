@@ -1,17 +1,13 @@
 package com.vanks.sound_cloud_client.ui.home
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,13 +16,9 @@ import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.adapter.AlbumAdapter
 import com.vanks.sound_cloud_client.adapter.PlaylistAdapter
 import com.vanks.sound_cloud_client.adapter.TrackAdapter
-import com.vanks.sound_cloud_client.collection.AlbumCollection
-import com.vanks.sound_cloud_client.collection.PlaylistCollection
-import com.vanks.sound_cloud_client.collection.TrackCollection
 import com.vanks.sound_cloud_client.databinding.FragmentHomeBinding
-import com.vanks.sound_cloud_client.repository.MusicRepository
+import com.vanks.sound_cloud_client.util.Resources
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
 
@@ -42,9 +34,9 @@ class HomeFragment : Fragment() {
         val root = binding.root
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        var musicRepository = MusicRepository()
+        var musicRepository = Resources.musicRep
 
-        homeViewModel.albumCollection = musicRepository.getAlbumCollection()
+        homeViewModel.userCollection = musicRepository.getAlbumCollection()
         homeViewModel.trackCollection = musicRepository.getTrackCollection()
         homeViewModel.playlistCollection = musicRepository.getPlaylistCollection()
 
@@ -52,8 +44,8 @@ class HomeFragment : Fragment() {
         homeViewModel.trackCollection.observe(this, Observer {
             binding.trackCollection = it
         })
-        homeViewModel.albumCollection.observe(this, Observer {
-            binding.albumCollection = it
+        homeViewModel.userCollection.observe(this, Observer {
+            binding.userCollection = it
         })
         homeViewModel.playlistCollection.observe(this, Observer {
             binding.playlistCollection = it
@@ -81,11 +73,12 @@ class HomeFragment : Fragment() {
             .setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
                     val searchTerm = search_field.text.toString().trim()
-//                homeViewModel.albumCollection = musicRepository.getAlbumCollection()
+//                homeViewModel.userCollection = musicRepository.getUserCollection()
 //                homeViewModel.trackCollection = musicRepository.getTrackCollection()
 //                homeViewModel.playlistCollection = musicRepository.getPlaylistCollection()
                     musicRepository.searchTracks(searchTerm)
                     musicRepository.searchPlaylists(searchTerm)
+                    musicRepository.searchUsers(searchTerm)
                 }
             })
 
