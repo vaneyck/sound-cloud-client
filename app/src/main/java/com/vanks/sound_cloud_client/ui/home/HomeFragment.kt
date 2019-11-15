@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,14 +14,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.vanks.sound_cloud_client.R
-import com.vanks.sound_cloud_client.adapter.AlbumAdapter
+import com.vanks.sound_cloud_client.adapter.UserAdapter
 import com.vanks.sound_cloud_client.adapter.PlaylistAdapter
 import com.vanks.sound_cloud_client.adapter.TrackAdapter
 import com.vanks.sound_cloud_client.databinding.FragmentHomeBinding
-import com.vanks.sound_cloud_client.repository.MusicRepository
+import com.vanks.sound_cloud_client.util.Reusable
 import kotlinx.android.synthetic.main.fragment_home.*
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.util.Log
+
 
 class HomeFragment : Fragment() {
+
+    val TAG = "HomeFragment"
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -34,7 +40,7 @@ class HomeFragment : Fragment() {
         val root = binding.root
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        var musicRepository = MusicRepository()
+        var musicRepository = Reusable.musicRepository
 
         homeViewModel.userCollection = musicRepository.getAlbumCollection()
         homeViewModel.trackCollection = musicRepository.getTrackCollection()
@@ -57,7 +63,7 @@ class HomeFragment : Fragment() {
 
         val navController = this.findNavController()
 
-        albumRecylerView.adapter = AlbumAdapter(navController)
+        albumRecylerView.adapter = UserAdapter(navController)
         playlistRecyclerView.adapter = PlaylistAdapter(navController)
         trackRecylerView.adapter = TrackAdapter(musicRepository)
 
@@ -76,9 +82,19 @@ class HomeFragment : Fragment() {
                     musicRepository.searchTracks(searchTerm)
                     musicRepository.searchPlaylists(searchTerm)
                     musicRepository.searchUsers(searchTerm)
+                    hideKeyboard()
                 }
             })
 
         return root
+    }
+
+    private fun hideKeyboard() {
+        try {
+            val imm = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm!!.hideSoftInputFromWindow(activity?.getCurrentFocus()?.getWindowToken(), 0)
+        } catch (e: Exception) {
+            Log.e(TAG, "Could not hide keyboard")
+        }
     }
 }

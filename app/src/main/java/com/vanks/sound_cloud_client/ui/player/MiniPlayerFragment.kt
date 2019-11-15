@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.vanks.sound_cloud_client.R
-import com.vanks.sound_cloud_client.databinding.FragmentHomeBinding
 import com.vanks.sound_cloud_client.databinding.FragmentMiniPlayerBinding
 import com.vanks.sound_cloud_client.repository.MusicRepository
-import com.vanks.sound_cloud_client.ui.collection.CollectionViewModel
+import com.vanks.sound_cloud_client.util.Reusable
 
 class MiniPlayerFragment : Fragment() {
 
@@ -26,7 +25,7 @@ class MiniPlayerFragment : Fragment() {
         val root = binding.root
 
         var playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
-        var musicRepository = MusicRepository()
+        var musicRepository = Reusable.musicRepository
 
         playerViewModel.track = musicRepository.retrieveCurrentTrack()
         playerViewModel.track.observe(this, Observer {

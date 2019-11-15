@@ -8,9 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.databinding.SingleAlbumBinding
+import com.vanks.sound_cloud_client.ui.home.HomeFragmentDirections
+import com.vanks.sound_cloud_client.ui.notifications.CollectionFragmentArgs
 import com.vanks.sound_cloud_client.viewmodel.User
 
-class AlbumAdapter(val navController: NavController) : RecyclerView.Adapter<AlbumViewHolder>() {
+class UserAdapter(val navController: NavController) : RecyclerView.Adapter<AlbumViewHolder>() {
 
     var users: ArrayList<User> = ArrayList()
 
@@ -35,9 +37,13 @@ class AlbumAdapter(val navController: NavController) : RecyclerView.Adapter<Albu
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         holder.binding.user = users[position]
-        holder.binding.userImage.setOnClickListener(object: View.OnClickListener {
+        holder.binding.userImage.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                navController.navigate(R.id.navigation_collection_view)
+                val action = HomeFragmentDirections.actionNavigationHomeToNavigationCollectionView(
+                    position,
+                    "User"
+                )
+                navController.navigate(action)
             }
 
         })

@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import com.vanks.sound_cloud_client.R
 import com.vanks.sound_cloud_client.databinding.SinglePlaylistBinding
+import com.vanks.sound_cloud_client.ui.home.HomeFragmentDirections
 import com.vanks.sound_cloud_client.viewmodel.Playlist
 
 class PlaylistAdapter(val navController: NavController) : RecyclerView.Adapter<PlaylistViewHolder>() {
@@ -37,7 +38,8 @@ class PlaylistAdapter(val navController: NavController) : RecyclerView.Adapter<P
         holder.binding.playlist = playlists[position]
         holder.binding.playlistImage.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
-                navController.navigate(R.id.navigation_collection_view)
+                val action = HomeFragmentDirections.actionNavigationHomeToNavigationCollectionView(position, "Playlist")
+                navController.navigate(action)
             }
 
         })

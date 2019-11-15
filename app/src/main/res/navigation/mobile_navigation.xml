@@ -32,5 +32,15 @@
         android:id="@+id/navigation_collection_view"
         android:name="com.vanks.sound_cloud_client.ui.notifications.CollectionFragment"
         android:label="@string/title_collection"
-        tools:layout="@layout/fragment_collection_view"/>
+        tools:layout="@layout/fragment_collection_view">
+        <argument
+            android:name="collectionIndex"
+            app:argType="integer"
+            android:defaultValue="0" />
+
+        <argument
+            android:name="collectionType"
+            app:argType="string"
+            android:defaultValue="Playlist" />
+    </fragment>
 </navigation>

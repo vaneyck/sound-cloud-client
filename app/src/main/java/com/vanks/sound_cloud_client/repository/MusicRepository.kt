@@ -24,6 +24,7 @@ class MusicRepository {
     private val playlists = MutableLiveData<PlaylistCollection>()
     private val trackHolder = MutableLiveData<TrackHolder>()
     private val currentTrack = MutableLiveData<Track>()
+    private val collectionTracks = MutableLiveData<TrackCollection>()
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
@@ -48,18 +49,51 @@ class MusicRepository {
         getSoundCloudWebservice().searchUsers(searchTerm).enqueue(saveUsersCallback())
     }
 
+    fun retrieveTracksForCollection(collectionId: Int, collectionType: String) {
+        if (collectionType == "User") {
+            getSoundCloudWebservice().retrieveUserTracks(collectionId)
+                .enqueue(saveCollectionTracksCallback(collectionId))
+        } else {
+            getSoundCloudWebservice().retrievePlaylistTracks(collectionId)
+                .enqueue(saveCollectionTracksCallback(collectionId))
+        }
+    }
+
+    fun getResourceId(index: Int, collectionType: String): Int {
+        if (collectionType == "User") {
+            var t = (users.value as UserCollection)
+            return t.users[index].id
+        } else {
+            var t = (playlists.value as PlaylistCollection)
+            return t.playlists[index].id
+        }
+    }
+
+    fun getTracksForCollection(): LiveData<TrackCollection> {
+        if (collectionTracks.value == null) {
+            collectionTracks.value = TrackCollection()
+        }
+        return collectionTracks
+    }
+
     fun getAlbumCollection(): LiveData<UserCollection> {
-        users.value = UserCollection()
+        if (users.value == null) {
+            users.value = UserCollection()
+        }
         return users
     }
 
     fun getTrackCollection(): LiveData<TrackCollection> {
-        tracks.value = TrackCollection()
+        if (tracks.value == null) {
+            tracks.value = TrackCollection()
+        }
         return tracks
     }
 
     fun getPlaylistCollection(): LiveData<PlaylistCollection> {
-        playlists.value = PlaylistCollection()
+        if (playlists.value == null) {
+            playlists.value = PlaylistCollection()
+        }
         return playlists
     }
 
@@ -76,7 +110,7 @@ class MusicRepository {
         currentTrack.value = t
     }
 
-    fun retrieveCurrentTrack() : LiveData<Track> {
+    fun retrieveCurrentTrack(): LiveData<Track> {
         return currentTrack
     }
 
@@ -106,6 +140,37 @@ class MusicRepository {
             // Error case is left out for brevity.
             override fun onFailure(call: Call<Array<SoundCloudTrack>>, t: Throwable) {
                 Log.e(TAG, t.toString())
+            }
+        }
+    }
+
+    private fun saveCollectionTracksCallback(collectionId: Int): Callback<Array<SoundCloudTrack>> {
+        return object : Callback<Array<SoundCloudTrack>> {
+            override fun onResponse(
+                call: Call<Array<SoundCloudTrack>>,
+                response: Response<Array<SoundCloudTrack>>
+            ) {
+                if (response.body() != null) {
+                    var soundCloudTracks = response.body() as Array<SoundCloudTrack>
+                    var trackCollection = TrackCollection()
+                    for (track in soundCloudTracks) {
+                        trackCollection.tracks.add(
+                            Track(
+                                track.id,
+                                track.title,
+                                track.artwork_url ?: IMAGE_URL,
+                                track.user.username
+                            )
+                        )
+                    }
+                    collectionTracks.value = trackCollection
+                }
+            }
+
+            // Error case is left out for brevity.
+            override fun onFailure(call: Call<Array<SoundCloudTrack>>, t: Throwable) {
+                Log.e(TAG, t.toString())
+                collectionTracks.value = TrackCollection()
             }
         }
     }

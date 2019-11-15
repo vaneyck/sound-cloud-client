@@ -4,9 +4,10 @@ import com.vanks.sound_cloud_client.collection.TrackCollection
 import com.vanks.sound_cloud_client.util.getRandomInt
 
 class User : TrackHolder {
-    var id: Int = 0
+    override var id: Int = 0
     override var title: String = "User Title"
     override var imageUrl: String = "https://picsum.photos/900/900?id=" + getRandomInt()
+    var tracks: TrackCollection = TrackCollection()
 
     constructor(_id: Int, _title: String, _imageUrl: String) {
         this.id = _id
@@ -23,7 +24,7 @@ class User : TrackHolder {
     }
 
     override fun getTrackCollection(): TrackCollection {
-        return TrackCollection()
+        return tracks
     }
 
 }

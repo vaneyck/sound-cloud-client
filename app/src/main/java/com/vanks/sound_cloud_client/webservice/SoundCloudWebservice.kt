@@ -6,6 +6,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface SoundCloudWebservice {
+
+    // webclient_id = WxqzHWXzRNNVvGVWqjmiZmoGj61vHlae
+
     @GET("https://api.soundcloud.com/tracks?client_id=95f22ed54a5c297b1c41f72d713623ef")
     fun searchTracks(@Query("q") searchQuery: String): Call<Array<SoundCloudTrack>>
 
@@ -17,6 +20,9 @@ interface SoundCloudWebservice {
 
     @GET("https://api.soundcloud.com/playlists/{playlistId}/tracks?client_id=95f22ed54a5c297b1c41f72d713623ef")
     fun retrievePlaylistTracks(@Path("playlistId") playlistId: Int): Call<Array<SoundCloudTrack>>
+
+    @GET("https://api.soundcloud.com/users/{userId}/tracks?client_id=95f22ed54a5c297b1c41f72d713623ef")
+    fun retrieveUserTracks(@Path("userId") userId: Int): Call<Array<SoundCloudTrack>>
 }
 
 class SoundCloudPlaylist {
