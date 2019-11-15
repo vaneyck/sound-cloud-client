@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.vanks.sound_cloud_client.collection.UserCollection
 import com.vanks.sound_cloud_client.collection.PlaylistCollection
 import com.vanks.sound_cloud_client.collection.TrackCollection
+import com.vanks.sound_cloud_client.util.IMAGE_URL
 import com.vanks.sound_cloud_client.viewmodel.User
 import com.vanks.sound_cloud_client.viewmodel.Playlist
 import com.vanks.sound_cloud_client.viewmodel.Track
@@ -125,12 +126,7 @@ class MusicRepository {
                     var trackCollection = TrackCollection()
                     for (track in soundCloudTracks) {
                         trackCollection.tracks.add(
-                            Track(
-                                track.id,
-                                track.title,
-                                track.artwork_url ?: IMAGE_URL,
-                                track.user.username
-                            )
+                            Track(track)
                         )
                     }
                     tracks.value = trackCollection
@@ -155,12 +151,7 @@ class MusicRepository {
                     var trackCollection = TrackCollection()
                     for (track in soundCloudTracks) {
                         trackCollection.tracks.add(
-                            Track(
-                                track.id,
-                                track.title,
-                                track.artwork_url ?: IMAGE_URL,
-                                track.user.username
-                            )
+                            Track(track)
                         )
                     }
                     collectionTracks.value = trackCollection
@@ -234,7 +225,4 @@ class MusicRepository {
             }
         }
     }
-
-    val IMAGE_URL: String =
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8JwLNj7h-x8b06skjkIZacF2Yw1trn3fGtNkiNJJIo2AnR_u3&s"
 }

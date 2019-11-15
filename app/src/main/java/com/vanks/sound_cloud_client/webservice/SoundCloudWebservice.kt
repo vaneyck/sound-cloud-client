@@ -1,5 +1,6 @@
 package com.vanks.sound_cloud_client.webservice
 
+import com.vanks.sound_cloud_client.util.SOUND_CLOUD_CLIENT_ID
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -7,21 +8,22 @@ import retrofit2.http.Query
 
 interface SoundCloudWebservice {
 
-    // webclient_id = WxqzHWXzRNNVvGVWqjmiZmoGj61vHlae
+    // sound cloud client id = WxqzHWXzRNNVvGVWqjmiZmoGj61vHlae
+    // from internet client_id = 95f22ed54a5c297b1c41f72d713623ef
 
-    @GET("https://api.soundcloud.com/tracks?client_id=95f22ed54a5c297b1c41f72d713623ef")
+    @GET("https://api.soundcloud.com/tracks?client_id=${SOUND_CLOUD_CLIENT_ID}")
     fun searchTracks(@Query("q") searchQuery: String): Call<Array<SoundCloudTrack>>
 
-    @GET("https://api.soundcloud.com/playlists?client_id=95f22ed54a5c297b1c41f72d713623ef")
+    @GET("https://api.soundcloud.com/playlists?client_id=${SOUND_CLOUD_CLIENT_ID}")
     fun searchCollection(@Query("q") searchQuery: String): Call<Array<SoundCloudPlaylist>>
 
-    @GET("https://api.soundcloud.com/users?client_id=95f22ed54a5c297b1c41f72d713623ef")
+    @GET("https://api.soundcloud.com/users?client_id=${SOUND_CLOUD_CLIENT_ID}")
     fun searchUsers(@Query("q") searchQuery: String): Call<Array<SoundCloudUser>>
 
-    @GET("https://api.soundcloud.com/playlists/{playlistId}/tracks?client_id=95f22ed54a5c297b1c41f72d713623ef")
+    @GET("https://api.soundcloud.com/playlists/{playlistId}/tracks?client_id=${SOUND_CLOUD_CLIENT_ID}")
     fun retrievePlaylistTracks(@Path("playlistId") playlistId: Int): Call<Array<SoundCloudTrack>>
 
-    @GET("https://api.soundcloud.com/users/{userId}/tracks?client_id=95f22ed54a5c297b1c41f72d713623ef")
+    @GET("https://api.soundcloud.com/users/{userId}/tracks?client_id=${SOUND_CLOUD_CLIENT_ID}")
     fun retrieveUserTracks(@Path("userId") userId: Int): Call<Array<SoundCloudTrack>>
 }
 
