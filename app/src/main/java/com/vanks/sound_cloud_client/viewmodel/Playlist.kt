@@ -14,7 +14,7 @@ class Playlist : TrackHolder {
     constructor(_id: Int, _title: String, _imageUrl: String, _artistName: String) {
         this.id = _id
         this.title = _title
-        this.imageUrl = _imageUrl
+        this.imageUrl = _imageUrl.replace("large", "t300x300")
         this.artistName = _artistName
     }
 

@@ -20,7 +20,7 @@ class Track {
 
         this.id = soundCloudTrack.id
         this.title = soundCloudTrack.title
-        this.imageUrl = soundCloudTrack.artwork_url?: IMAGE_URL
+        this.imageUrl = (soundCloudTrack.artwork_url?: IMAGE_URL).replace("large", "t300x300")
         this.artistName = soundCloudTrack.user.username
         this.streamUrl = soundCloudTrack.stream_url + "?client_id=" + SOUND_CLOUD_CLIENT_ID
         this.playbackCount = soundCloudTrack.playback_count

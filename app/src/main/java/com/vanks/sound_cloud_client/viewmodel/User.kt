@@ -12,7 +12,7 @@ class User : TrackHolder {
     constructor(_id: Int, _title: String, _imageUrl: String) {
         this.id = _id
         this.title = _title
-        this.imageUrl = _imageUrl
+        this.imageUrl = _imageUrl.replace("large", "t300x300")
     }
 
     override fun getCreator(): String {
