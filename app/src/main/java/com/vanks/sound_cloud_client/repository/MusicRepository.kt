@@ -20,6 +20,8 @@ import retrofit2.*
 class MusicRepository {
     val TAG: String = "MusicRepository"
 
+    //   TODO Use this track to set the notification
+
     private val users = MutableLiveData<UserCollection>()
     private val tracks = MutableLiveData<TrackCollection>()
     private val playlists = MutableLiveData<PlaylistCollection>()

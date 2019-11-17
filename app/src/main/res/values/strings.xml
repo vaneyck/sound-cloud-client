@@ -5,4 +5,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="search_hint">Search</string>
     <string name="title_collection">User/Playlist</string>
+    <string name="channel_description">Notification Channel for track that is currently playing</string>
 </resources>
