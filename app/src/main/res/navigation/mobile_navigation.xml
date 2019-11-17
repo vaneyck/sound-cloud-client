@@ -15,6 +15,9 @@
             app:destination="@id/navigation_collection_view"
             app:launchSingleTop="false"
             app:popUpTo="@+id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_home_to_maxPlayerFragment"
+            app:destination="@id/maxPlayerFragment" />
     </fragment>
 
     <fragment
@@ -43,4 +46,8 @@
             app:argType="string"
             android:defaultValue="Playlist" />
     </fragment>
+    <fragment
+        android:id="@+id/maxPlayerFragment"
+        android:name="com.vanks.sound_cloud_client.ui.player.MaxPlayerFragment"
+        android:label="MaxPlayerFragment" />
 </navigation>

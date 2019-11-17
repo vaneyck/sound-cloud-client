@@ -1,6 +1,5 @@
 package com.vanks.sound_cloud_client.ui.player
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -29,6 +28,8 @@ import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import android.content.Intent
 import com.vanks.sound_cloud_client.MainActivity
 import android.os.Build
+import android.widget.LinearLayout
+import androidx.navigation.fragment.findNavController
 import com.squareup.picasso.Picasso
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -46,6 +47,8 @@ class MiniPlayerFragment : Fragment() {
     lateinit var binding: FragmentMiniPlayerBinding
     lateinit var playerNotificationManager: PlayerNotificationManager
 
+    var musicRepository = Reusable.musicRepository
+
     private val CHANNEL_ID = "sound-cloud-clone"
     private val NOTIFICATION_ID = 345
 
@@ -59,7 +62,6 @@ class MiniPlayerFragment : Fragment() {
         val root = binding.root
 
         var playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
-        var musicRepository = Reusable.musicRepository
 
         playerViewModel.track = musicRepository.retrieveCurrentTrack()
         playerViewModel.track.observe(this, Observer {
@@ -78,21 +80,31 @@ class MiniPlayerFragment : Fragment() {
 //        playerNotificationManager.setColor(Color.BLACK)
 //        playerNotificationManager.setColorized(true)
 
+
+        root.findViewById<LinearLayout>(R.id.mini_player_container)
+            .setOnClickListener {
+                this.findNavController().navigate(R.id.maxPlayerFragment)
+                musicRepository.setInPlayerMode(true)
+            }
+
         return root
     }
 
     override fun onResume() {
         super.onResume()
+        Log.i(TAG, "Resuming the app")
         createNotificationChannel()
         initializePlayer()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        releasePlayer()
+        Log.d(TAG, "Destroying the app")
+        //releasePlayer()
     }
 
     private fun initializePlayer() {
+        Log.i(TAG, "initializePlayer: player is " + Reusable.player)
         if (Reusable.player == null) {
             Reusable.player = ExoPlayerFactory.newSimpleInstance(this.context)
         }
@@ -100,7 +112,6 @@ class MiniPlayerFragment : Fragment() {
         var playerView = binding.root.playbackControlView as PlayerControlView
         playerView.setPlayer(Reusable.player)
 
-        //
         playerNotificationManager.setPlayer(Reusable.player)
         // show the controls indefinitely
         playerView.showTimeoutMs = -1
@@ -113,25 +124,17 @@ class MiniPlayerFragment : Fragment() {
     }
 
     private fun playTrack(track: Track) {
-        val uri = Uri.parse(track.streamUrl)
-        val mediaSource = buildMediaSource(uri, this.context)
-        Reusable.player.prepare(mediaSource, true, false)
-        Reusable.player.setPlayWhenReady(playWhenReady)
-    }
+        Log.d(TAG, "playTrack: previous track ${musicRepository.previousTrack?.title}")
+        Log.d(TAG, "playTrack: request to play track ${track.title}")
 
-    /**
-     * hideSystemUi is a helper method called in onResume which allows us to have a full screen experience:
-     */
-    @SuppressLint("InlinedApi")
-    private fun hideSystemUi() {
-//        playerView.setSystemUiVisibility(
-//            View.SYSTEM_UI_FLAG_LOW_PROFILE
-//                    or View.SYSTEM_UI_FLAG_FULLSCREEN
-//                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//        )
+        if (track.id != musicRepository.previousTrack?.id) {
+            Log.d(TAG, "playing new track ${track.title}")
+            val uri = Uri.parse(track.streamUrl)
+            val mediaSource = buildMediaSource(uri, this.context)
+            Reusable.player.prepare(mediaSource, true, false)
+            Reusable.player.setPlayWhenReady(playWhenReady)
+        }
+        musicRepository.previousTrack = track
     }
 
     private fun releasePlayer() {

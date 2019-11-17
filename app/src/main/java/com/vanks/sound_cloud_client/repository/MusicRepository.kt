@@ -27,7 +27,10 @@ class MusicRepository {
     private val playlists = MutableLiveData<PlaylistCollection>()
     private val trackHolder = MutableLiveData<TrackHolder>()
     private val currentTrack = MutableLiveData<Track>()
+    private val inPlayerMode = MutableLiveData<Boolean>()
     private val collectionTracks = MutableLiveData<TrackCollection>()
+
+    var previousTrack: Track? = null
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
@@ -115,6 +118,14 @@ class MusicRepository {
 
     fun retrieveCurrentTrack(): LiveData<Track> {
         return currentTrack
+    }
+
+    fun setInPlayerMode(inMode: Boolean) {
+        inPlayerMode.value = inMode
+    }
+
+    fun retrieveInPlayerMode () : LiveData<Boolean> {
+        return inPlayerMode
     }
 
     private fun saveTracksCallback(): Callback<Array<SoundCloudTrack>> {

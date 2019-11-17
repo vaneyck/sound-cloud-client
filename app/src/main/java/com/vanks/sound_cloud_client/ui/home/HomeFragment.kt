@@ -29,6 +29,7 @@ class HomeFragment : Fragment() {
     val TAG = "HomeFragment"
 
     private lateinit var homeViewModel: HomeViewModel
+    var musicRepository = Reusable.musicRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +41,6 @@ class HomeFragment : Fragment() {
         val root = binding.root
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        var musicRepository = Reusable.musicRepository
 
         homeViewModel.userCollection = musicRepository.getAlbumCollection()
         homeViewModel.trackCollection = musicRepository.getTrackCollection()
@@ -79,14 +79,19 @@ class HomeFragment : Fragment() {
             .setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
                     val searchTerm = search_field.text.toString().trim()
-                    musicRepository.searchTracks(searchTerm)
-                    musicRepository.searchPlaylists(searchTerm)
-                    musicRepository.searchUsers(searchTerm)
+                    searchByTerm(searchTerm)
                     hideKeyboard()
                 }
             })
 
+        searchByTerm("")
         return root
+    }
+
+    private fun searchByTerm(searchTerm: String) {
+        musicRepository.searchTracks(searchTerm)
+        musicRepository.searchPlaylists(searchTerm)
+        musicRepository.searchUsers(searchTerm)
     }
 
     private fun hideKeyboard() {
