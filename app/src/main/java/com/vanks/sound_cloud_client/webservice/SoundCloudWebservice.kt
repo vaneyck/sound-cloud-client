@@ -72,6 +72,7 @@ class SoundCloudTrack {
     var attachments_uri: String = "https://api.soundcloud.com/tracks/161084205/attachments"
     var video_url: String = ""
     var download_url: String = ""
+    var playback_count: Int = 0
 
     override fun toString(): String {
         return "SoundCloudTrack(id=$id, title='$title')"

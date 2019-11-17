@@ -49,6 +49,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/play_collection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
