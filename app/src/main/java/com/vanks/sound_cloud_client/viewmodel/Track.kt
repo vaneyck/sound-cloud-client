@@ -12,6 +12,7 @@ class Track {
     var artistName: String = "Lil Qwuezy"
     var streamUrl: String = ""
     var playbackCount: Int = 0
+    var permalinkUrl: String = ""
 
     var soundCloudTrack: SoundCloudTrack
 
@@ -24,6 +25,7 @@ class Track {
         this.artistName = soundCloudTrack.user.username
         this.streamUrl = soundCloudTrack.stream_url + "?client_id=" + SOUND_CLOUD_CLIENT_ID
         this.playbackCount = soundCloudTrack.playback_count
+        this.permalinkUrl = soundCloudTrack.permalink_url
     }
 
     fun getDisplayCount () : String {

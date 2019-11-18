@@ -22,6 +22,8 @@ import com.vanks.sound_cloud_client.util.Reusable
 import kotlinx.android.synthetic.main.fragment_home.*
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.util.Log
+import android.view.KeyEvent
+import com.google.android.material.textfield.TextInputEditText
 
 
 class HomeFragment : Fragment() {
@@ -75,16 +77,15 @@ class HomeFragment : Fragment() {
         trackRecylerView.layoutManager =
             LinearLayoutManager(this.activity, LinearLayoutManager.VERTICAL, false)
 
-        root.findViewById<MaterialButton>(R.id.search_button)
-            .setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
+        root.findViewById<TextInputEditText>(R.id.search_field)
+            .setOnKeyListener { v, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                     val searchTerm = search_field.text.toString().trim()
                     searchByTerm(searchTerm)
                     hideKeyboard()
                 }
-            })
-
-        searchByTerm("")
+                true
+            }
         return root
     }
 
