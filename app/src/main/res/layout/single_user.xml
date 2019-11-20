@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="playlist"
-            type="com.vanks.sound_cloud_client.viewmodel.Playlist" />
+            name="user"
+            type="com.vanks.sound_cloud_client.viewmodel.User" />
     </data>
 
     <RelativeLayout
@@ -16,10 +16,10 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/playlistImage"
+            android:id="@+id/userImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:imageUrl="@{playlist.imageUrl}" />
+            app:imageUrl="@{user.imageUrl}" />
 
         <TextView
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:ellipsize="end"
             android:lines="1"
             android:padding="2sp"
-            android:text="@{playlist.title}"
+            android:text="@{user.title}"
             android:textColor="@android:color/white" />
     </RelativeLayout>
 </layout>
